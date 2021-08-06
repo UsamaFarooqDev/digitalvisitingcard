@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-signin-client_id"
+        content="469729127307-9rg5j439s5ihkuh9qf29c3m8m76a6tnb.apps.googleusercontent.com">
+    <link rel="stylesheet" href="../css/app.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <script>
+        // Render Google Sign-in button
+        gapi.load('auth2' , function(){
+            gapi.auth2.init();
+        })
+        function renderButton() {
+            gapi.signin2.render('g-signin2', {
+                'scope': 'profile email',
+                'width': 240,
+                'height': 50,
+                'longtitle': true,
+                'theme': 'light',
+                'onsuccess': onSignIn
+            //    'onfailure': onFailure
+            });
+        }
+
+        // Sign-in success callback
+        function onSignIn(googleUser) {
+            // Useful data for your client-side scripts:
+            var profile = googleUser.getBasicProfile();
+            console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+            console.log('Full Name: ' + profile.getName());
+            console.log('Given Name: ' + profile.getGivenName());
+            console.log('Family Name: ' + profile.getFamilyName());
+            console.log("Image URL: " + profile.getImageUrl());
+            console.log("Email: " + profile.getEmail());
+            document.getElementById('loginpage').style.display = "none";
+            document.getElementById('dashboard').style.display = "block";
+            document.getElementById('name').innerHTML = profile.getName();
+
+
+            // The ID token you need to pass to your backend:
+            var id_token = googleUser.getAuthResponse().id_token;
+            console.log("ID Token: " + id_token);
+        }
+
+        // Sign-in failure callback
+        // function onFailure(error) {
+        //     alert(error);
+        // }
+
+        // Sign out the user
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                document.getElementsByClassName("userContent")[0].innerHTML = '';
+                document.getElementsByClassName("userContent")[0].style.display = "none";
+                document.getElementById("g-signin2").style.display = "block";
+                document.getElementById('loginpage').style.display = "block";
+            document.getElementById('dashboard').style.display = "none";
+            });
+
+            auth2.disconnect();
+        }
+    </script>
+    <title>Digital Visiting Card</title>
+</head>
+
+<body>
+    <div id="loginpage">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#"><img src="../images/logo.jpeg" width="200" class="img-fluid mx-auto"
+                        alt=""></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#pricing">Pricing</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class=" button" href="#">Join It's Free</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!--Login Form-->
+        <div class="container login">
+            <div class="row mx-auto">
+                <div class="col-sm-6">
+                    <form action="dashboard.html">
+                        <center>
+                            <h1>Login </h1>
+                        </center>
+                        <label for="">Email:</label>
+                        <input type="email" name="" placeholder="Email" class="form-control" id="" required>
+                        <label for="">Password:</label>
+                        <input type="password" name="" placeholder="....." id="pass" class="form-control" required>
+                        <br>
+                        <center> <input type="submit" value="Login" class="btn btn-warning"></center>
+                        <br>
+                        <center> <em class="mx-auto">Don't Have A Account?</em></center>
+                        <br>
+                        <center><a href="register.html">Register Now</a></center> <br>
+                        <center>
+                            <h4>Or</h4>
+                        </center>
+                        <br>
+                        <center>
+                           
+
+                        </center>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--Footer-->
+        <div class="container-fluid footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <center>
+                            <img src="images/logo.jpeg" class="img-fluid" alt=""> <br> <br>
+                            <h6>Digital Visiting Cards are Free Virtual Business Cards that will help you to get more
+                                customers in your business. Create Free Digital Visiting Cards with us Now!</h6>
+                        </center>
+                    </div>
+                    <div class="col-sm-4">
+                        <center>
+                            <h1>My Account</h1> <br>
+                            <ul>
+                                <li> <a href="">Login</a></li>
+                                <li><a href="">Register</a></li>
+                            </ul>
+                        </center>
+                    </div>
+                    <div class="col-sm-4">
+                        <center>
+                            <h1>Contact Us</h1>
+                            <h6>+90134414322</h6>
+                            <h6>abc@gmail.com</h6>
+                        </center>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>
